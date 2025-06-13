@@ -8,6 +8,7 @@ from activities import (
     classify_tweet_activity,
     compute_accuracy_activity,
     compute_average_sentiment_activity,
+    print_sentiment_scores_table_activity,
 )
 
 from shared import TWEET_ANALYSIS_QUEUE_NAME
@@ -25,11 +26,13 @@ async def main():
             classify_tweet_activity,
             compute_accuracy_activity,
             compute_average_sentiment_activity,
+            print_sentiment_scores_table_activity,
         ],
     )
 
     print("🚀 Worker started. Listening for workflows...")
     await worker.run()
+
 
 if __name__ == "__main__":
     asyncio.run(main())
