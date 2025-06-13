@@ -19,8 +19,8 @@ async def start():
     )
 
     accuracy = await handle.result()
-    print(f"✅ Sentiment Accuracy: {accuracy.sentiment_accuracy:.2%}")
-    print(f"✈️ Airline Name Accuracy: {accuracy.airline_accuracy:.2%}")
+    print(f"Sentiment Accuracy: {accuracy.sentiment_accuracy:.2%}")
+    print(f"Airline Name Accuracy: {accuracy.airline_accuracy:.2%}")
 
 
 asyncio.run(start())

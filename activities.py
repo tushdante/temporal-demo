@@ -149,22 +149,6 @@ async def compute_average_sentiment_activity(
     Returns:
         Dict[str, float]: Average value of the sentiment for each airline
     """
-    # sentiment_map = {"positive": 1, "neutral": 0, "negative": -1}
-
-    # scores = defaultdict(list)
-
-    # # Group sentiment scores by predicted airline
-    # for r in results:
-    #     airline = r.prediction.airline_name.strip()
-
-    #     if airline:  # Skip empty names
-    #         sentiment_label = r.prediction.sentiment.lower()
-    #         score = sentiment_map.get(sentiment_label, 0)
-    #         scores[airline].append(score)
-
-    # averages: Dict[str, float] = {}
-
-    # return averages
     # Initialize dictionaries to track total scores and counts
     score_totals = defaultdict(int)
     score_counts = defaultdict(int)
@@ -228,10 +212,10 @@ async def print_sentiment_scores_table_activity(scores: Dict[str, float]) -> Non
         scores (dict[str, float]): A dictionary mapping airline names to sentiment scores.
     """
     if not scores:
-        print("⚠️ No sentiment scores to display.")
+        print("No sentiment scores to display.")
         return
 
-    print("\n🛫 Sentiment Scores by Airline:\n")
+    print("\nSentiment Scores by Airline:\n")
     print(f"{'Airline':<25} | {'Sentiment Score':>16}")
     print("-" * 45)
 

@@ -63,9 +63,7 @@ class EvaluateSentimentWorkflow:
             results,
             start_to_close_timeout=timedelta(seconds=10),
         )
-        
-        print(sentiment_scores)
-        
+
         # 5. Print results
         await workflow.execute_activity(
             print_sentiment_scores_table_activity,

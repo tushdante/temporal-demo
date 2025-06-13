@@ -56,11 +56,11 @@ Failures may also be simulated by restricting network access and the workflow is
 
 ## Example Output
 
-✅ Sentiment Accuracy: 95.00%
+Sentiment Accuracy: 95.00%
 
-✈️ Airline Name Accuracy: 99.00%
+Airline Name Accuracy: 99.00%
 
-🛫 Sentiment Scores by Airline:
+Sentiment Scores by Airline:
 
 | Airline             | Sentiment Score |
 |---------------------|-----------------|
