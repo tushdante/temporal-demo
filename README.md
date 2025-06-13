@@ -11,25 +11,26 @@ The goals for the following demo is as follows:
 
 ```mermaid
 flowchart TD
-    Start([Start Workflow]) --> ReadCSV["🔍 read_csv_activity
+    Start([Start Workflow]) --> ReadCSV["read_csv_activity
     Read tweets from CSV"]
-    ReadCSV --> ClassifyTweets{"📚 Classify all tweets?"}
+    ReadCSV --> ClassifyTweets{"Classify all tweets"}
 
-    ClassifyTweets -->|for each tweet| ClassifyTweet["🧠 classify_tweet_activity
+    ClassifyTweets -->|for each tweet| ClassifyTweet["classify_tweet_activity
     Call OpenAI API"]
 
-    ClassifyTweet --> StoreResults["📥 Store Evaluation Result"]
+    ClassifyTweet --> StoreResults["Store Evaluation Result"]
 
     StoreResults --> CheckNextTweet{More tweets?}
     CheckNextTweet -->|Yes| ClassifyTweet
     CheckNextTweet -->|No| ComputeMetrics
 
-    ComputeMetrics["📈 compute_accuracy_activity
-    Calculate accuracy metrics"] --> ComputeAverage["📊 compute_average_sentiment_activity\nCalculate average sentiment"]
-    ComputeAverage --> PrintResults["🖨 pretty_print_results_activity
+    ComputeMetrics["compute_accuracy_activity
+    Calculate accuracy metrics"] --> ComputeAverage["compute_average_sentiment_activity
+    Calculate average sentiment"]
+    ComputeAverage --> PrintResults["pretty_print_results_activity
     Print results and summary"]
 
-    PrintResults --> End([✅ End Workflow])
+    PrintResults --> End([End Workflow])
 ```
 
 ## Technical Details
