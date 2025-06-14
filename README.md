@@ -53,23 +53,26 @@ Failures may also be simulated by restricting network access and the workflow is
 1. Data quality and consistency is paramount to ensure we're computing the accuracy values correctly. In order to ensure this, when extracting the airline names from the dataset we normalize these (convert to lowercase and parse as a string from its original `List[str]` type)
 2. The AI model is subject to inconsistencies and in order to coerce the model the prompt must be specific in the return format required. We also provide a list of unique airline names to ensure that the model only returns a normalized value for comparison.
 3. Debugging can often be complicated given the distributed nature of the worflow. When using a single worker the workflow can be straightforward but with distributed workflows things like handling rate limits and timeouts appropriately.
+4. Size limits loading entire dataset with panads
+5. The worker nodes would sometimes retain the previous version of the application logic and would require a restart to force an update
 
 ## Example Output
 
-Sentiment Accuracy: 95.00%
+Sentiment Accuracy: 87.00%
 
-Airline Name Accuracy: 99.00%
+Airline Name Accuracy: 80.00%
 
 Sentiment Scores by Airline:
 
-| Airline             | Sentiment Score |
-|---------------------|-----------------|
-| United Airlines     |           -0.88 |
-| American Airlines   |           -0.88 |
-| Southwest Airlines  |           -0.92 |
-| US Airways          |           -0.96 |
-| JetBlue Airways     |           -1.00 |
-| Virgin America      |           -1.00 |
+| Airline          | Sentiment Score |
+|------------------|-----------------|
+| Virgin America   |           0.00  |
+| Delta            |          -0.10  |
+| Southwest        |          -0.11  |
+| US Airways       |          -0.44  |
+| American         |          -0.72  |
+| United           |          -0.82  |
+
 
 
 Result:

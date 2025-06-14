@@ -20,29 +20,6 @@ import openai
 # Set your OpenAI API key
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-
-def parse_airline(value: str) -> str:
-    """Helper function to parse the airline name from a stringified list.
-    Returns the first airline string if present, else returns an empty string.
-    This is done to ensure that we're comparing normalized string values for airlines
-    when computing accuracy
-
-    Args:
-        value (str): Airline column for a given row in the csv
-
-    Returns:
-        str: The first airline as a string if present, else empty string
-    """
-    try:
-        items = ast.literal_eval(value)
-        if isinstance(items, list) and items:
-            return str(items[0])
-        else:
-            return ""
-    except (ValueError, SyntaxError):
-        return ""
-
-
 @activity.defn
 async def read_csv_activity(file_path: str) -> DatasetMetadata:
     """Parse the input csv file and generate a DatasetMetadata object for use in later activities
@@ -54,17 +31,16 @@ async def read_csv_activity(file_path: str) -> DatasetMetadata:
         DatasetMetadata: Dataclass containing a list of Tweets and a list of unique airline names
     """
     df = pd.read_csv(
-        file_path, header=0, nrows=100, names=["tweet", "airline", "sentiment"]
+        file_path, header=0, usecols=["text", "airline", "airline_sentiment"]
     )  # read first 50 rows
 
-    # Apply the parse_airline function to extract the airline name
-    df["airline"] = df["airline"].apply(parse_airline)
-
+    df = df.sample(n=100, random_state=42)  # sample a random selection of 100 rows
+    
     tweets = [
         TweetRecord(
-            tweet_data=row["tweet"],
+            tweet_data=row["text"],
             airline_name=row["airline"],
-            sentiment=row["sentiment"],
+            sentiment=row["airline_sentiment"],
         )
         for _, row in df.iterrows()
     ]
