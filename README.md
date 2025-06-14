@@ -35,8 +35,10 @@ flowchart TD
 
 ## Setup
 
-1. Setup virtual env `python -m venv venv/` and `source venv/bin/activate`
-1. Install dependencies `pip install -r requirements.txt`
+1. Create and activate a virtual environment `python -m venv venv/` and `source venv/bin/activate`
+1. Install project dependencies `pip install -r requirements.txt`
+1. Configure enviornment variables. Copy the `.env.example` to `.env` and set your OpenAI API key in the `.env` file.
+1. Load the enviornment variable `source .env`
 1. Start the temporal service `temporal server start-dev`
 1. Start the worker `python run_worker.py`
 1. Run the workflow `python run_workflow.py`
@@ -58,10 +60,14 @@ In addition to the activities we also provide a few non-retryable errors for any
 Failures may also be simulated by restricting network access and the workflow is able to successfully recover from this state. We also limit the total number of retries to 3 along with a strict timeout of 20 seconds to prevent backpressure on upstream services.
 
 ### Challenges
-1. The AI model is subject to inconsistencies and in order to coerce the model the prompt must be specific in the return format required. We also provide a list of unique airline names to ensure that the model only returns a normalized value for comparison.
-1. Debugging can often be complicated given the distributed nature of the worflow. When using a single worker the workflow can be straightforward but with distributed workflows things like handling rate limits and timeouts appropriately.
-1. Size limits loading entire dataset with panads
-1. The worker nodes would sometimes retain the previous version of the application logic and would require a restart to fetch the latest version.
+
+1. The AI model can produce inconsistent outputs. To ensure consistent results, prompts must explicitly define the expected return format. In addition, a predefined list of normalized airline names is used to help the model return standardized values for accurate comparison.
+
+2. Debugging workflows can be complex due to their distributed nature. While workflows running on a single worker are generally easier to reason about, distributed setups introduce new challenges—such as managing rate limits, handling timeouts, and ensuring consistent execution across nodes.
+
+3. Temporal imposes size limits on workflow results. As a result, working with large datasets in `pandas` often requires writing data to disk or using external storage mechanisms, rather than returning large datasets directly.
+
+4. Worker nodes may sometimes cache outdated versions of the application logic. In such cases, restarting the worker is necessary to ensure the latest code changes are picked up.
 
 ## Example Output
 
@@ -94,6 +100,6 @@ Result:
 1. **Add Result Post-Processing**: Extend the workflow to include steps for processing and transforming batch results before storage or delivery to downstream systems.
 1. **Build Webhook Notifications**: Implement a notification system that alerts services or users when batches complete processing.
 1. **Optimize Polling Strategy**: Enhance the polling mechanism with exponential backoff and jitter to reduce unnecessary API calls while maintaining responsiveness.
-1. **Add Database Integration**: Store batch results in a database with appropriate indexing for efficient retrieval and analysis.
+1. **Add Database Integration**: Store results in a database with appropriate indexing for efficient retrieval and analysis. In addition, this can be used to circumvent any result size limitations with the Temporal server
 1. **Implement Request Validation**: Add robust validation for incoming messages to prevent batch failures due to malformed requests.
 1. **Performance Benchmarking**: Measure and optimize the performance of your batch processing system, potentially parallelizing certain operations for greater throughput.
