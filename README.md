@@ -33,6 +33,14 @@ flowchart TD
     PrintResults --> End([End Workflow])
 ```
 
+## Setup
+
+1. Start the temporal service `temporal server start-dev`
+1. Setup virtual env `python -m venv venv/` and `source venv/bin/activate`
+1. Install dependencies `pip install -r requirements.txt`
+1. Start the worker `python run_worker.py`
+1. Run the workflow `python run_workflow.py`
+
 ## Technical Details
 
 The Temporal workflow consists of the following activities:
@@ -50,11 +58,10 @@ In addition to the activities we also provide a few non-retryable errors for any
 Failures may also be simulated by restricting network access and the workflow is able to successfully recover from this state. We also limit the total number of retries to 3 along with a strict timeout of 20 seconds to prevent backpressure on upstream services.
 
 ### Challenges
-1. Data quality and consistency is paramount to ensure we're computing the accuracy values correctly. In order to ensure this, when extracting the airline names from the dataset we normalize these (convert to lowercase and parse as a string from its original `List[str]` type)
-2. The AI model is subject to inconsistencies and in order to coerce the model the prompt must be specific in the return format required. We also provide a list of unique airline names to ensure that the model only returns a normalized value for comparison.
-3. Debugging can often be complicated given the distributed nature of the worflow. When using a single worker the workflow can be straightforward but with distributed workflows things like handling rate limits and timeouts appropriately.
-4. Size limits loading entire dataset with panads
-5. The worker nodes would sometimes retain the previous version of the application logic and would require a restart to force an update
+1. The AI model is subject to inconsistencies and in order to coerce the model the prompt must be specific in the return format required. We also provide a list of unique airline names to ensure that the model only returns a normalized value for comparison.
+1. Debugging can often be complicated given the distributed nature of the worflow. When using a single worker the workflow can be straightforward but with distributed workflows things like handling rate limits and timeouts appropriately.
+1. Size limits loading entire dataset with panads
+1. The worker nodes would sometimes retain the previous version of the application logic and would require a restart to fetch the latest version.
 
 ## Example Output
 
