@@ -77,10 +77,7 @@ Sentiment Scores by Airline:
 
 Result:
 ```
-{
-    "airline_accuracy":0.99,
-    "sentiment_accuracy":0.95
-}
+{"airline_accuracy":0.8,"sentiment_accuracy":0.87}
 ```
 
 ## Potential Improvements
