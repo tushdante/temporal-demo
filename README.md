@@ -37,8 +37,8 @@ flowchart TD
 
 1. Setup virtual env `python -m venv venv/` and `source venv/bin/activate`
 1. Install dependencies `pip install -r requirements.txt`
-1. Start the worker `python run_worker.py`
 1. Start the temporal service `temporal server start-dev`
+1. Start the worker `python run_worker.py`
 1. Run the workflow `python run_workflow.py`
 
 ## Technical Details
