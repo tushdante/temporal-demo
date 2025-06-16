@@ -65,7 +65,7 @@ Failures may also be simulated by restricting network access and the workflow is
 
 2. Debugging workflows can be complex due to their distributed nature. While workflows running on a single worker are generally easier to reason about, distributed setups introduce new challenges—such as managing rate limits, handling timeouts, and ensuring consistent execution across nodes.
 
-3. Temporal imposes size limits on workflow results. As a result, working with large datasets in `pandas` often requires writing data to disk or using external storage mechanisms, rather than returning large datasets directly.
+3. Temporal imposes size limits on workflow results. Due to this, working with large datasets in `pandas` often requires writing data to disk or using external storage mechanisms, rather than returning large datasets directly.
 
 4. Worker nodes may sometimes cache outdated versions of the application logic. In such cases, restarting the worker is necessary to ensure the latest code changes are picked up.
 
@@ -95,7 +95,7 @@ Result:
 
 ## Potential Improvements
 
-1. **Create a Management Dashboard**: Develop a simple web interface that integrates with Temporal’s API to monitor batch jobs, track costs, and visualize processing metrics.
+1. **Implement alerting and montioring**: Develop monitoring and alerting capabilities that use Temporal’s API to monitor batch jobs, track costs, and visualize processing metrics with alerting on failures and timeouts, for example.
 1. **Implement Batching**: Instead of submitting each request to the API one at a time, create a queue system that builds batches of requests and use OpenAIs Batch endpoint for cost savings and efficiency
 1. **Add Result Post-Processing**: Extend the workflow to include steps for processing and transforming batch results before storage or delivery to downstream systems.
 1. **Build Webhook Notifications**: Implement a notification system that alerts services or users when batches complete processing.
